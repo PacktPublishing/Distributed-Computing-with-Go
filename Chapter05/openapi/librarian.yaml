@@ -1,0 +1,118 @@
+# openapi/librarian.yaml
+
+openapi: 3.0.0
+servers:
+  - url: /api
+info:
+  title: Goophr Librarian API
+  version: '1.0'
+  description: |
+    API responsible for indexing & communicating with Goophr Concierge.
+paths:
+  /index:
+    post:
+      description: |
+        Add terms to index.
+      responses:
+        '200':
+          description: |
+            Terms were successfully added to the index.
+        '400':
+          description: >
+            Request was not processed because payload was incomplete or
+            incorrect.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/terms'
+        description: |
+          List of terms to be added to the index.
+        required: true
+  /query:
+    post:
+      description: |
+        Search for all terms in the payload.
+      responses:
+        '200':
+          description: |
+            Returns a list of all the terms along with their frequency,
+            documents the terms appear in and link to the said documents.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/results'
+        '400':
+          description: >
+            Request was not processed because payload was incomplete or
+            incorrect.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    parameters: []
+components:
+  schemas:
+    error:
+      type: object
+      properties:
+        msg:
+          type: string
+    term:
+      type: object
+      required:
+        - title
+        - token
+        - doc_id
+        - line_index
+        - token_index
+      properties:
+        title:
+          description: |
+            Title of the document to which the term belongs.
+          type: string
+        token:
+          description: |
+            The term to be added to the index.
+          type: string
+        doc_id:
+          description: |
+            The unique hash for each document.
+          type: string
+        line_index:
+          description: |
+            Line index at which the term occurs in the document.
+          type: integer
+        token_index:
+          description: |
+            Position of the term in the document.
+          type: integer
+    terms:
+      type: object
+      properties:
+        code:
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/term'
+    results:
+      type: object
+      properties:
+        count:
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/result'
+    result:
+      type: object
+      properties:
+        doc_id:
+          type: string
+        score:
+          type: integer

@@ -1,0 +1,47 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: n-z-librarian
+spec:
+  selector:
+    app: goophr
+    component: librarian
+    range: n-z
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 7070
+    nodePort: 30070
+  type: LoadBalancer
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: n-z-librarian-deployment
+  labels:
+    app: goophr
+    component: librarian
+    range: n-z
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: goophr
+      component: librarian
+      range: n-z
+  template:
+    metadata:
+      labels:
+        app: goophr
+        component: librarian
+        range: n-z
+    spec:
+      containers:
+      - name: n-z-librarian
+        image: goophr_librarian
+        imagePullPolicy: Never
+        env:
+        - name: API_PORT
+          value: "7070"
+        ports:
+        - containerPort: 7070

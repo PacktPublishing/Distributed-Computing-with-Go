@@ -1,0 +1,121 @@
+# openapi/books.yaml
+
+openapi: 3.0.0
+servers:
+  - url: /api
+info:
+  title: Books API
+  version: '1.0'
+  description: >
+    API responsible for adding, reading and updating list of books.
+paths:
+  /books:
+    get:
+      description: |
+        Get list of all books
+      responses:
+        '200':
+          description: |
+            Request successfully returned list of all books
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response'
+  /books/{id}:
+    get:
+      description: |
+        Get a particular books with ID `id`
+      responses:
+        '200':
+          description: |
+            Request was successfully completed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/document'
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: integer
+          description: Book ID of the book to get.
+    post:
+      description: |
+        Get a particular books with ID `id`
+      responses:
+        '200':
+          description: |
+            Request was successfully completed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payload'
+      requestBody:
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/document'
+    put:
+      description: |
+        Update the data of a Book with ID `id` with the payload sent in the request body.
+      responses:
+        '200':
+          description: |
+            Request was successfully completed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payload'
+      requestBody:
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/document'
+    delete:
+      description: |
+        Get a particular books with ID `id`
+      responses:
+        '200':
+          description: |
+            Request was successfully completed.
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: integer
+          description: Book ID of the book to get.
+components:
+  schemas:
+    response:
+      type: array
+      items:
+        $ref: '#/components/schemas/document'
+      
+    document:
+      type: object
+      required:
+        - title
+        - link
+      properties:
+        id:
+          type: integer
+          description: Book ID
+        title:
+          type: string
+          description: Title of the book
+        link: 
+          type: string
+          description: Link to the book
+     
+    payload:
+      type: object
+      required:
+        - title
+        - link
+      properties:
+        title:
+          type: string
+          description: Title of the book
+        link: 
+          type: string
+          description: Link to the book

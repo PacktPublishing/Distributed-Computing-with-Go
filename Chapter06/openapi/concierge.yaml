@@ -1,0 +1,83 @@
+# openapi/concierge.yaml
+
+openapi: 3.0.0
+servers:
+  - url: /api
+info:
+  title: Goophr Concierge API
+  version: '1.0'
+  description: >
+    API responsible for responding to user input and communicating with Goophr
+    Librarian.
+paths:
+  /feeder:
+    post:
+      description: |
+        Register new document to be indexed.
+      responses:
+        '200':
+          description: |
+            Request was successfully completed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response'
+        '400':
+          description: >
+            Request was not processed because payload was incomplete or
+            incorrect.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/document'
+        required: true
+  /query:
+    post:
+      description: |
+        Search query
+      responses:
+        '200':
+          description: |
+            Response consists of links to document
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/document'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        required: true
+components:
+  schemas:
+    response:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Status code to send in response
+        msg:
+          type: string
+          description: Message to send in response
+    document:
+      type: object
+      required:
+        - title
+        - link
+      properties:
+        title:
+          type: string
+          description: Title of the document
+        link:
+          type: string
+          description: Link to the document

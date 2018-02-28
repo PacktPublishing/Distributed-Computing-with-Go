@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  a_m_librarian:
+    build: librarian/.
+    image: goophr_librarian
+    environment:
+      - API_PORT=${A_M_PORT}
+    ports:
+      - ${A_M_PORT}:${A_M_PORT}
+  n_z_librarian:
+      image: goophr_librarian
+      environment:
+        - API_PORT=${N_Z_PORT}
+      ports:
+        - ${N_Z_PORT}:${N_Z_PORT}
+  others_librarian:
+      image: goophr_librarian
+      environment:
+        - API_PORT=${OTHERS_PORT}
+      ports:
+        - ${OTHERS_PORT}:${OTHERS_PORT}
+  concierge:
+    build: concierge/.
+    environment:
+      - API_PORT=${CONCIERGE_PORT}
+      - LIB_A_M=http://a_m_librarian:${A_M_PORT}/api
+      - LIB_N_Z=http://n_z_librarian:${N_Z_PORT}/api
+      - LIB_OTHERS=http://others_librarian:${OTHERS_PORT}/api
+    ports:
+      - ${CONCIERGE_PORT}:${CONCIERGE_PORT}
+    links:
+      - a_m_librarian
+      - n_z_librarian
+      - others_librarian
+      - file_server
+  file_server:
+    build: simple-server/.
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+

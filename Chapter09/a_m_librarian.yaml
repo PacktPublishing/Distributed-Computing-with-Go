@@ -1,0 +1,47 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: a-m-librarian
+spec:
+  selector:
+    app: goophr
+    component: librarian
+    range: a-m
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 6060
+    nodePort: 30060
+  type: LoadBalancer
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: a-m-librarian-deployment
+  labels:
+    app: goophr
+    component: librarian
+    range: a-m
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: goophr
+      component: librarian
+      range: a-m
+  template:
+    metadata:
+      labels:
+        app: goophr
+        component: librarian
+        range: a-m
+    spec:
+      containers:
+      - name: a-m-librarian
+        image: goophr_librarian
+        imagePullPolicy: Never
+        env:
+        - name: API_PORT
+          value: "6060"
+        ports:
+        - containerPort: 6060
