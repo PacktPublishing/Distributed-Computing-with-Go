@@ -31,6 +31,6 @@ Download and install Go from https://golang. org/ and Docker from https://www. d
 ## Related Products
 * [Distributed Computing with Go](https://www.packtpub.com/application-development/hands-software-architecture-golang?utm_source=github&utm_medium=repository&utm_campaign=9781788622592)
 
-* [Distributed Computing with Go](https://www.packtpub.com/web-development/isomorphic-go?utm_source=github&utm_medium=repository&utm_campaign=9781788394185)
+* [Go Systems Programming](https://www.packtpub.com/networking-and-servers/go-systems-programming?utm_source=github&utm_medium=repository&utm_content=9781787125643)
 
 * [Security with Go](https://www.packtpub.com/networking-and-servers/security-go?utm_source=github&utm_medium=repository&utm_campaign=9781788627917)
