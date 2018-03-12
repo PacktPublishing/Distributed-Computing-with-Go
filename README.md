@@ -26,7 +26,7 @@ func main() {
 
 The material in the book is designed to enable a hands-on approach. Throughout the book, a conscious effort has been made to provide all the relevant information to the reader beforehand so that, if the reader chooses, they can try to solve the problem on their own and then refer to the solution provided in the book. The code in the book does not have any Go dependencies beyond the standard library. This is done in order to ensure that the code examples provided in the book never change, and this also allows us to explore the standard library. 
 The source code in the book should be placed at $GOPATH/src/distributedgo. The source code for examples given will be located inside the $GOPATH/src/distributed-go/chapterX folder, where X stands for the chapter number.
-Download and install Go from https://golang. org/ and Docker from https://www. docker. com/community-edition website
+Download and install Go from https://golang.org/ and Docker from https://www.docker.com/community-edition website
 
 ## Related Products
 * [Isomorphic Go](https://www.packtpub.com/web-development/isomorphic-go?utm_source=github&utm_medium=repository&utm_content=9781788394185)
