@@ -115,7 +115,7 @@ func QueryHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/json")
 	w.Write(payload)
 
-	fmt.Printf("%#v\n", sortedResults))
+	fmt.Printf("%#v\n", sortedResults)
 }
 
 func sortResults(rm map[string]int) []document {
